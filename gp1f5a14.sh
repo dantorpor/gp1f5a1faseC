@@ -10,8 +10,10 @@ then
    comprova=$(ssh vagrant@producciog07 ls /home/vagrant/gp1f5a14 | grep $ver_ant)
    if [[ $comprova != "" ]]
    then
-      ssh vagrant@producciog07 docker-compose -f /home/vagrant/gp1f5a14/$ver_ant/gp1f5a14/docker-compose.yml down
+      ssh vagrant@producciog07 docker-compose -f /home/vagrant/gp1f5a14/$ver_ant/hotel/docker-compose.yml down
    fi
 fi
-ssh vagrant@producciog07 docker-compose -f /home/vagrant/gp1f5a14/$ver/gp1f5a14/docker-compose.yml up -d
+ssh vagrant@producciog07 docker rmi hotel_reserva:latest
+ssh vagrant@producciog07 docker build -t hotel:1.0 .
+ssh vagrant@producciog07 docker-compose -f /home/vagrant/gp1f5a14/$ver/hotel/docker-compose.yml up --scale reserva=15 -d
 exit 0
